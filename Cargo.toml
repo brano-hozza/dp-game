@@ -10,6 +10,7 @@ log = { version = "*", features = [
     "max_level_debug",
     "release_max_level_warn",
 ] }
+bevy_fast_tilemap = { git = "https://github.com/Droggelbecher/bevy-fast-tilemap.git" }
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
