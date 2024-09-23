@@ -10,25 +10,15 @@ pub fn print_position_system(query: Query<(&Position, &Name)>) {
     }
 }
 
-const MAP: [[u32; 10]; 10] = [
-    [0, 2, 2, 2, 2, 2, 2, 2, 2, 5],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [10, 22, 22, 22, 22, 22, 22, 22, 22, 15],
-    [40, 42, 42, 42, 42, 42, 42, 42, 42, 45],
-];
-
 pub fn setup(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut materials: ResMut<Assets<Map>>,
 ) {
     commands.spawn(Camera2dBundle::default());
+
+    let json_map: Vec<Vec<u32>> =
+        serde_json::from_str(include_str!("../assets/maps/01.json")).unwrap();
 
     let map = Map::builder(
         // Map size
@@ -39,7 +29,7 @@ pub fn setup(
         vec2(16., 16.),
     )
     .build_and_initialize(|map| {
-        for (y, row) in MAP.iter().enumerate() {
+        for (y, row) in json_map.iter().enumerate() {
             for (x, &tile) in row.iter().enumerate() {
                 map.set(x as u32, y as u32, tile);
             }

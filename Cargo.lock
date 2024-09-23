@@ -1619,6 +1619,8 @@ dependencies = [
  "bevy_dylib",
  "bevy_fast_tilemap",
  "log",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
