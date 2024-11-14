@@ -1,15 +1,22 @@
+use std::fmt;
+
 use bevy::prelude::*;
-use core::fmt;
 
 #[derive(Component)]
 pub struct Position {
-    pub x: f32,
-    pub y: f32,
+    pub x: u32,
+    pub last_x: u32,
+    pub y: u32,
+    pub last_y: u32,
 }
 
 impl fmt::Display for Position {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Position: ({}, {})", self.x, self.y)
+        write!(
+            f,
+            "Position: ({}, {})\nLast Position: ({}, {})\n",
+            self.x, self.y, self.last_x, self.last_y
+        )
     }
 }
 
@@ -21,6 +28,3 @@ impl fmt::Display for Name {
         write!(f, "Name: {}", self.0)
     }
 }
-
-#[derive(Component)]
-pub struct Player;
