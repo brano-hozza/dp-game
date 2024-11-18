@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    common::components::Position,
+    common::components::{Name, Position},
     map::{MAP_HEIGHT, MAP_WIDTH},
 };
 
@@ -27,4 +27,19 @@ pub fn move_player_system(
             position.y += 1;
         }
     }
+}
+
+//
+
+pub fn setup(mut commands: Commands) {
+    commands.spawn((
+        Position {
+            x: 1,
+            last_x: 1,
+            y: 2,
+            last_y: 2,
+        },
+        Name("Player".to_string()),
+        Player,
+    ));
 }

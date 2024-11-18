@@ -2,15 +2,17 @@ pub mod common;
 pub mod map;
 pub mod player;
 pub mod score;
-use bevy::prelude::*;
+pub mod ui;
 
-pub mod systems;
+use bevy::prelude::*;
 
 use common::systems::print_position_system;
 use map::{resources::GameMap, systems::update_map, MapTile};
 use player::systems::move_player_system;
-use score::{components::GainScoreEvent, systems::display_score_gain_system};
-use systems::{check_chests_system, setup};
+use score::{
+    components::GainScoreEvent,
+    systems::{check_chests_system, display_score_gain_system},
+};
 
 pub struct DpPlugin;
 
@@ -24,7 +26,15 @@ impl Plugin for DpPlugin {
             .collect();
         app.insert_resource(GameMap(game_map))
             .add_event::<GainScoreEvent>()
-            .add_systems(Startup, setup)
+            .add_systems(
+                Startup,
+                (
+                    setup,
+                    ui::systems::setup,
+                    map::systems::setup,
+                    player::systems::setup,
+                ),
+            )
             .add_systems(
                 Update,
                 (
@@ -34,4 +44,16 @@ impl Plugin for DpPlugin {
                 ),
             );
     }
+}
+
+fn setup(mut commands: Commands) {
+    commands.spawn(Camera2dBundle {
+        projection: OrthographicProjection {
+            far: 1000.,
+            near: -1000.,
+            scale: 0.3,
+            ..default()
+        },
+        ..default()
+    });
 }
