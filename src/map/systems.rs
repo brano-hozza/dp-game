@@ -39,16 +39,6 @@ pub fn setup(
     mut materials: ResMut<Assets<Map>>,
     game_map: Res<GameMap>,
 ) {
-    commands.spawn(Camera2dBundle {
-        projection: OrthographicProjection {
-            far: 1000.,
-            near: -1000.,
-            scale: 0.3,
-            ..default()
-        },
-        ..default()
-    });
-
     let map = Map::builder(
         // Map size
         uvec2(MAP_WIDTH, MAP_HEIGHT),
